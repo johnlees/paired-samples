@@ -32,9 +32,6 @@ num_mistmatched = 0
 mismatches = rep(0,length(cnvr(int_cnv_result)))
 for (i in seq(1,nrow(pairs))) # reverted to using a loop as data structures are complex...
 {
-  counts[,i*2-1] <- mcols(cnvr(int_cnv_result))[,eval(paste("X",pairs$Sample_ID,"_csf",sep="")[i])]
-  counts[,i*2] <- mcols(cnvr(int_cnv_result))[,eval(paste("X",pairs$Sample_ID,"_csf",sep="")[i])]
-  
   overlaps[,i] <- factor(mcols(cnvr(int_cnv_result))[,eval(paste("X",pairs$Sample_ID,"_csf",sep="")[i])],levels = paste("CN",seq(0,8),sep="")) == 
     factor(mcols(cnvr(int_cnv_result))[,eval(paste("X",pairs$Sample_ID,"_blood",sep="")[i])],levels = paste("CN",seq(0,8),sep=""))
   mismatched_regions <- which(!(overlaps[,i]))
@@ -52,7 +49,7 @@ ranges_format <- cbind(start(ranges(cnvr(int_cnv_result))), end(ranges(cnvr(int_
 colnames(ranges_format) <- c("start", "end", "width")
 
 write.csv(overlaps, "cnv_mismatches.csv")
-write.csv(counts,"cnv_counts.csv")
+write.csv(mcols(cnvr(int_cnv_result)),file="cnv_counts.csv")
 write.csv(ranges_format,"cnv_locations.csv")
 
 #pdf(file="cnvs.pdf") # does nothing
