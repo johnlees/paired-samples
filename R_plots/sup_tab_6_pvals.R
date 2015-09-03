@@ -1,0 +1,2 @@
+vars <- as.data.frame(matrix(c(12,21,2/3,1,3,1/3,0,1,4/4305,12612,10573,1/3,2,12,3/27,4,3,3/27,19274,14417,2/3),ncol=3,byrow=T))
+p.adjust(mapply(function(a,b,c) prop.test(x=c(a,b),n=c(4305*c*2512,4305*c*1937))$p.value, vars$V1, vars$V2, vars$V3))
