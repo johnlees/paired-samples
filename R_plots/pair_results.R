@@ -7,17 +7,16 @@ ggplot(no_outliers, aes(x=Total)) +
   xlab("Number of variants between samples") + ylab("Count") + 
   scale_x_discrete(limits=seq(0,10,1),breaks=seq(0,10,1)) + facet_wrap(~Species,scales="free")
 
-t.test(as.data.frame(subset(x=no_outliers,subset=Species=="Streptococcus pneumoniae"))$Total, 
-       as.data.frame(subset(x=no_outliers,subset=Species=="Neisseria meningitidis"))$Total)
+map_to_23F <- read.delim("~/Documents/PhD/Pairs/map_to_23F.plot", header=FALSE, stringsAsFactors=FALSE)
 
-outliers <- as.data.frame(subset(x=results,subset=Total>10))
-sort(outliers$Total)
+ggplot(map_to_23F, aes(x=V3)) + 
+  geom_dotplot(binwidth = 1000, dotsize = 30, stackdir = "centerwhole", fill="blue") + 
+  scale_y_continuous(NULL, breaks = NULL) + theme_bw(base_size = 14) + 
+  xlab("Genome coordinate")
 
-# Do something with these
+map_to_MC58 <- read.delim("~/Documents/PhD/Pairs/map_to_MC58.plot", header=FALSE, stringsAsFactors=FALSE)
 
-strep_results_stacked <- read.delim("~/Documents/PhD/Pairs/strep_results_stacked.Rin")
-no_outliers_stacked <- as.data.frame(subset(x=strep_results_stacked,subset=Count<15 & Count!=0))
-
-ggplot(no_outliers_stacked) + geom_histogram(aes(x=Count,fill=Type),binwidth=1) + 
-xlab("Number of variants between samples") + ylab("Count") + 
-scale_x_discrete(breaks=seq(1,9,1),limits=seq(1,9,1)) + theme_bw(base_size = 14)
+ggplot(map_to_MC58, aes(x=V3)) + 
+  geom_dotplot(binwidth = 1000, dotsize = 30, stackdir = "centerwhole", fill="blue") + 
+  scale_y_continuous(NULL, breaks = NULL) + theme_bw(base_size = 14) + 
+  xlab("Genome coordinate")
